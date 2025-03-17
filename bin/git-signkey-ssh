@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Configure git to sign commits with an SSH key
+# Usage: git-signkey-ssh <path-to-signing-key>
+
+# Example: git-signkey-ssh ~/.ssh/signing-key.pub
+
+git config --local gpg.format ssh
+git config --local user.signingkey $1
