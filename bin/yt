@@ -1,0 +1,24 @@
+#!/bin/sh
+# https://github.com/yt-dlp/yt-dlp
+
+if [ -z "$1" ]; then
+    echo "Usage: yt <url>"
+    exit 1
+fi
+
+start_time=$(date +%s)
+
+cd ~/Videos && yt-dlp \
+    -f 'bestvideo[height<=?1080]+bestaudio/best' \
+    --merge-output-format mkv \
+    -S "ext" \
+    --downloader aria2c --downloader-args aria2c:'-c -j 8 -x 8 -s 8 -k 1M' "$1"
+
+end_time=$(date +%s)
+elapsed_time=$((end_time - start_time))
+echo "Time taken to download: $elapsed_time seconds"
+
+# --min-split-size is -k
+# --max-connection-per-server is -x
+# --max-concurrent-downloads is -j
+# --split is -s 
