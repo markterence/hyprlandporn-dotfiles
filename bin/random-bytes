@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Generate random bytes and write them to stdout
+# Usage: random-bytes [count]
+# Default count is 32 bytes
+
+# if no pipe is connected to stdout, just return a message that tells 
+# printing binary data to terminal is not a good idea.
+_printHelp() {
+    echo "Usage: random-bytes [count]"
+    echo "Default count is 32 bytes"
+    echo "Example:"
+    echo " random-bytes | base64"
+}
+
+if [ -t 1 ]; then
+    echo "Nothing to do. Printing binary data to terminal is not a good idea."
+    _printHelp
+    exit 0
+fi
+
+count=${1:-32}
+head -c $count /dev/urandom
