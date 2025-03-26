@@ -5,5 +5,10 @@
 
 # Example: git-signkey-ssh ~/.ssh/signing-key.pub
 
+if [ -z "$1" ]; then
+    echo "Usage: git-signkey-ssh <path-to-signing-key>"
+    exit 1
+fi
+
 git config --local gpg.format ssh
 git config --local user.signingkey $1

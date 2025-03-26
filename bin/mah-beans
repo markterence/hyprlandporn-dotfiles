@@ -1,0 +1,5 @@
+#!/bin/sh
+
+SCRIPT_DIR="$HOME/hyprlandporn-dotfiles/bin"
+
+ls -1 $SCRIPT_DIR | column
