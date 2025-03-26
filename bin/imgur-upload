@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# simple script to upload images to imgur
+# requires curl and xclip or wl-copy
+
+source ~/.config/.imgur-credentials
+
+# Check if file provided
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <image_file>"
+    exit 1
+fi
+
+IMAGE_PATH="$1"
+
+# Check if file exists
+if [ ! -f "$IMAGE_PATH" ]; then
+    echo "Error: File does not exist: $IMAGE_PATH"
+    exit 1
+fi
+
+# Check if file is an image
+mime_type=$(file -b --mime-type "$IMAGE_PATH")
+if [[ $mime_type != image/* ]]; then
+    echo "Error: File is not an image: $IMAGE_PATH"
+    exit 1
+fi
+
+# Get access token
+oauth_url="https://api.imgur.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=token&state=xyz"
+
+# request access token
+if [ -z "$ACCESS_TOKEN" ]; then
+    echo "Please visit the following URL and grant access to this application:"
+    echo "$oauth_url"
+    echo "After granting access, copy the access token from the URL and add it to the "~/.config/.imgur-credentials" file."
+    echo ""
+    echo "Example:"
+    echo " CLIENT_ID=\"your_client_id\""
+    echo " ACCESS_TOKEN=\"your_access_token\""
+    echo " ALBUM_ID=\"your_album_id\""
+    echo ""
+    exit 1
+fi
+
+echo "Uploading image to Imgur..."
+
+# Upload to Imgur using API
+response=$(curl -s --location --request POST "https://api.imgur.com/3/image" \
+    --header "Authorization: Bearer $ACCESS_TOKEN" \
+    --form "image=@$IMAGE_PATH" \
+    --form "album=$ALBUM_ID")
+
+# Check for errors
+if echo "$response" | grep -q '"success":false'; then
+    echo "Error uploading to Imgur:"
+    echo "$response" | grep -o '"error":"[^"]*"'
+    exit 1
+fi
+
+# Extract direct link
+direct_link=$(echo "$response" | grep -o '"link":"[^"]*"' | grep -o 'http[^"]*' | sed 's/\\//g')
+
+# Copy to clipboard if xclip is available
+if command -v xclip >/dev/null 2>&1; then
+    echo "$direct_link" | xclip -selection clipboard
+    echo "Link copied to clipboard!"
+elif command -v wl-copy >/dev/null 2>&1; then
+    echo "$direct_link" | wl-copy
+    echo "Link copied to clipboard!"
+fi
+
+echo "Direct link: $direct_link"
