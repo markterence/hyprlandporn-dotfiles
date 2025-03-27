@@ -4,7 +4,7 @@ I got an 8BitDo Ultimate 2C Wireless Controller and it works out of the box with
 
 To make it work, I had to use `xboxdrv` to micic an Xbox controller and remap the buttons. You'll see when you tested it on `evtest`. Some buttons are using different names/codes. For example, the `A` button is `BTN_SOUTH` and the `B` button is `BTN_EAST`.
 
-Save the config somewhere in your home directory, e.g. `~/config/xboxdrv/8bitdo-ultimate-2c-wireless/8bitdo-ultimate-2c-wireless.ini`
+Save the [config file](#8bitdo-ultimate-2c-wireless-controller-xboxdrv-config-mapping) somewhere in your home directory, e.g. `~/config/xboxdrv/8bitdo-ultimate-2c-wireless/8bitdo-ultimate-2c-wireless.ini`
 
 Run this script on another terminal. This will make the 8BitDo Ultimate 2C Wireless Controller work with GeForce Now.
 
