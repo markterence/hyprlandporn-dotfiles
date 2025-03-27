@@ -55,6 +55,8 @@ sudo xboxdrv --mimic-xpad --silent \
 When controller didn't work out of the box (Which it should), I found the following resources helpful:
 - https://gist.github.com/ammuench/0dcf14faf4e3b000020992612a2711e2
 
+-----
+
 ```sh
 $ evtest
 

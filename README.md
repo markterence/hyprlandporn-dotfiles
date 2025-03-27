@@ -11,9 +11,9 @@ I used a pre-configured setup from [ml4w (Stephan Raabe)](https://github.com/myl
 - [Hyprland config](#hyprland-config)
 
 -----------------
-<img src="https://markterence.github.io/images/hyprland/swappy-20250228-234939.png" width="480"/>
-<img src="https://markterence.github.io/images/hyprland/swappy-20250321-122003.png" width="480"/>
-<img src="https://markterence.github.io/images/hyprland/swappy-20250321-122027.png" width="480"/>
+<img src="https://markterence.github.io/images/hyprland/swappy-20250228-234939.png?w=cache_busting" width="480"/>
+<img src="https://markterence.github.io/images/hyprland/swappy-20250321-122003.png?v=cache_bust" width="480"/>
+<img src="https://markterence.github.io/images/hyprland/swappy-20250321-122027.png?cache_buster=1" width="480"/>
 
 ------------------
 
@@ -51,7 +51,7 @@ random-bytes 16 | base64
 
 Download youtube videos straight from the terminal to my drive using `yt-dlp`. Downloaded videos are saved in `~/Videos` folder.
 
-I picks `bestvideo[height<=?1080]+bestaudio/best` format and saves with `.mkv` extension.
+It picks `bestvideo[height<=?1080]+bestaudio/best` format and saves with `.mkv` extension.
 
 ```sh
 yt https://www.youtube.com/watch?v=dQw4w9WgXcQ
