@@ -110,8 +110,8 @@ ABS_Z = X2
 ABS_RZ = Y2
 
 [axismap]
--Y1 = Y1
--Y2 = Y2
+Y1 = Y1
+Y2 = Y2
 
 [ui-axismap]
 X1 = ABS_X
