@@ -67,7 +67,7 @@ I had modified the configuration files to suit my needs.
 
 #### Keybinds
 
-| My Keybind | Original Keybind | Description |
+| My Keybind | [JaKooL's Hyprland (v.2.3)](https://github.com/JaKooLit/Hyprland-Dots) Original Keybind | Description |
 | --- | --- | --- |
 | `SUPER` + `SHIFT` + `END` | `SUPER` + `SHIFT` + `Q` | Kill active window |
 | `SUPER` + `END` | `SUPER` + `Q` | Quit active window, not kill (depends on app/window) |
