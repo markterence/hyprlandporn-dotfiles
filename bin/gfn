@@ -9,7 +9,7 @@ EVENT_ID=/dev/input/event25
 
 # Replace this with the path to where you have the config file
 # Prefer to use absolute path instead of relative path
-CONFIG_FILE="~/hyprlandporn-dotfiles/config/xboxdrv/8bitdo-ultimate-2c-wireless/8bitdo-ultimate-2c-wireless.ini"
+CONFIG_FILE="/home/lemon/hyprlandporn-dotfiles/config/xboxdrv/8bitdo-ultimate-2c-wireless/8bitdo-ultimate-2c-wireless.ini"
 
 # vendor_id:product_id from `lsusb` command
 # Sometimes the 8BitDo Ultimate 2C Wireless controller is on "2dc8:301c"
