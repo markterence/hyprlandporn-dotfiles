@@ -103,6 +103,9 @@ I had modified the configuration files to suit my needs.
 #### Window Rules
 
 - Force GeForce NOW to windowed mode, this prevents GeForce NOW to takeover and go fullscreen when launching a game.
+- `tag:games*` 
+  - Window tagged as `games` are moved to some higher workspace (workspace 15 I think), because I have many open window up to workspace 10 when I am working. This makes game clients such as Steam to be farther away when I have it open/afk'ing on some games.
+  - Make games move to workspace 15 silently.
 
 #### Decorations
 
