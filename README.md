@@ -57,6 +57,34 @@ It picks `bestvideo[height<=?1080]+bestaudio/best` format and saves with `.mkv` 
 yt https://www.youtube.com/watch?v=dQw4w9WgXcQ
 ```
 
+## `gfn`
+
+Starts xboxdrv with the mapping config for 8BitDo Ultimate 2C Wireless Controller so it can work or get detected in GeForce NOW.
+
+```
+gfn
+```
+
+### `record-screen`
+
+Record the screen using `wf-recorder`. Uses `slurp` to capture region of a screen. 
+Comes with gif and mp4 presets. Remember to change the audio device in the script and save directory.
+
+Files are saved in `~/Pictures` folder.
+
+```shell
+record-screen --help
+Usage: record-screen [preset] [--fullscreen]
+Presets:
+  gif_24: - 24fps gif
+  gif_30: - 30fps gif
+  gif_60: - 60fps gif
+  mp4_30: - 30fps mp4 (no audio)
+  mp4_60: - 60fps mp4 (no audio) *Default*
+  mp4_30_audio: - 30fps mp4 with audio
+  mp4_60_audio: - 60fps mp4 with audio
+```
+
 ---------
 
 ## Hyprland config 
