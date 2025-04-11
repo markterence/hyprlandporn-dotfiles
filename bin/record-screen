@@ -11,7 +11,7 @@ FRAME_RATE=60
 
 # Edit if needed to change the default save directory
 SAVE_DIR="$HOME/Pictures"
-FILENAME="wf-recorder_$(date +%Y-%m-%d_%H%M%S).mp4"
+FILENAME="wf-recorder_$(date +%Y-%m-%d_%H%M%S)"
 OUT_FILE="$SAVE_DIR/$FILENAME"
 
 # Flags 
@@ -33,13 +33,13 @@ function _print_usage() {
 
 function ask_confirm {
     # Ask if the user want to continue on recording.
-    # print the configuration
+    # print the configuration 
     echo "Recording with the following configuration:"
     echo "  - Preset: $1"
     echo "  - Frame rate: ${1#*_}"
     echo "  - Audio: ${2:-'no audio'}"
     echo "  - Fullscreen: ${3:-false}"
-    echo "  - Output file: $OUT_FILE"
+    echo "  - Output file: ${4}"
     echo "Do you want to continue? [Y/n]"
     read -r answer
     if [[ "$answer" == "Y" || "$answer" == "y" || -z "$answer" ]]; then
@@ -51,28 +51,70 @@ function ask_confirm {
 }
 
 function preset_gif {
-    $_fps=${1:-24}
-    wf-recorder -g "$(slurp)" -r $_fps -f $OUT_FILE.gif
+    _preset_name=$1
+    if [[ "$_preset_name" == "gif_24" ]]; then
+        _fps=24
+    elif [[ "$_preset_name" == "gif_30" ]]; then
+        _fps=30
+    elif [[ "$_preset_name" == "gif_60" ]]; then
+        _fps=60
+    else
+        _fps=60
+    fi
+    echo "wf-recorder -g \"\$(slurp)\" -r $_fps -f $OUT_FILE"
+    wf-recorder -g "$(slurp)" -r $_fps -f $OUT_FILE -c "gif"
 }
 
-function preset_mp4 {
-    _fps=${1:-60}
-    wf-recorder -g "$(slurp)" -r $_fps -f $OUT_FILE.mp4
+function preset_mp4 { 
+    _preset_name=$1
+    if [[ "$_preset_name" == "mp4_30" ]]; then
+        _fps=30
+    elif [[ "$_preset_name" == "mp4_60" ]]; then
+        _fps=60
+    else
+        _fps=60
+    fi
+    OUT_FILE="${OUT_FILE}.mp4"
+    wf-recorder -g "$(slurp)" -r $_fps -f $OUT_FILE
 }
 
 function preset_mp4_with_audio {
-    _fps=${1:-60}
-    wf-recorder -g "$(slurp)" -r $_fps --audio=$AUDIO_DEVICE -f $OUT_FILE.mp4
+    _preset_name=$1
+    if [[ "$_preset_name" == "mp4_30_audio" ]]; then
+        _fps=30
+    elif [[ "$_preset_name" == "mp4_60_audio" ]]; then
+        _fps=60
+    else
+        _fps=60
+    fi
+    OUT_FILE="${OUT_FILE}.mp4"
+    wf-recorder -g "$(slurp)" -r $_fps --audio=$AUDIO_DEVICE -f $OUT_FILE
 }
 
 function preset_mp4_fullscreen {
-    _fps=${1:-60}
-    wf-recorder -r $_fps -f $OUT_FILE.mp4
+    _preset_name=$1
+    if [[ "$_preset_name" == "mp4_30" ]]; then
+        _fps=30
+    elif [[ "$_preset_name" == "mp4_60" ]]; then
+        _fps=60
+    else
+        _fps=60
+    fi
+    OUT_FILE="${OUT_FILE}.mp4"
+    wf-recorder -r $_fps -f $OUT_FILE
 }
 
 function preset_mp4_fullscreen_with_audio {
-    _fps=${1:-60}
-    wf-recorder -r $_fps --audio=$AUDIO_DEVICE -f $OUT_FILE.mp4
+    _preset_name=$1
+    if [[ "$_preset_name" == "mp4_30_audio" ]]; then
+        _fps=30
+    elif [[ "$_preset_name" == "mp4_60_audio" ]]; then
+        _fps=60
+    else
+        _fps=60
+    fi
+    OUT_FILE="${OUT_FILE}.mp4"
+    wf-recorder -r $_fps --audio=$AUDIO_DEVICE -f $OUT_FILE
 }
 
 # check if --fullscreen is passed as an argument in any order and set the flag to true
@@ -87,28 +129,34 @@ done
 # If no arguments are passed run the default preset
 if [[ $# -eq 0 ]]; then
     if [[ "$_fullscreen" == true ]]; then
-        ask_confirm "mp4_60" "audio" "fullscreen"
+        OUT_FILE="${OUT_FILE}.mp4"
+        ask_confirm "mp4_60" "audio" "fullscreen" $OUT_FILE
         preset_mp4_fullscreen
     else
-        ask_confirm "mp4_60" "audio" "false"
+        OUT_FILE="${OUT_FILE}.mp4"
+        ask_confirm "mp4_60" "audio" "false" $OUT_FILE
         preset_mp4
     fi
 elif [[ "$1" == "gif_24" || "$1" == "gif_30" || "$1" == "gif_60" ]]; then
-    ask_confirm "$1" "no audio" "no"
+    OUT_FILE="${OUT_FILE}.gif"
+    ask_confirm "$1" "no audio" "no" $OUT_FILE
     preset_gif $1
 elif [[ "$1" == "mp4" ]]; then 
     # default to mp4_60
-    ask_confirm "mp4_60" "no audio" "$_fullscreen"
+    OUT_FILE="${OUT_FILE}.mp4"
+    ask_confirm "mp4_60" "no audio" "$_fullscreen" $OUT_FILE
     preset_mp4
 elif [[ "$1" == "mp4_30" || "$1" == "mp4_60" ]]; then 
-    ask_confirm "$1" "no audio" "$_fullscreen"
+    OUT_FILE="${OUT_FILE}.mp4"
+    ask_confirm "$1" "no audio" "$_fullscreen" $OUT_FILE
     if [[ "$_fullscreen" == true ]]; then
         preset_mp4_fullscreen $1
     else
         preset_mp4 $1
     fi
 elif [[ "$1" == "mp4_30_audio" || "$1" == "mp4_60_audio" ]]; then
-    ask_confirm "$1" "audio" "$_fullscreen"
+    OUT_FILE="${OUT_FILE}.mp4"
+    ask_confirm "$1" "audio" "$_fullscreen" $OUT_FILE
     if [[ "$_fullscreen" == true ]]; then
         preset_mp4_fullscreen_with_audio $1
     else
