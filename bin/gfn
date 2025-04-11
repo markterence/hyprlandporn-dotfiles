@@ -19,13 +19,17 @@ DEVICE_ID="2dc8:310a"
 # I tried to get the device from --evdev, it works but will not respond after a while.
 # xboxdrv --mimic-xpad --silent --quiet --evdev $EVENT_ID -c $CONFIG_FILE
 
+# xboxdrv --mimic-xpad --silent --evdev $EVENT_ID -c $CONFIG_FILE --detach-kernel-driver --type xbox360
+
 # xinput? 
-sudo xboxdrv --mimic-xpad --silent \
---quiet \
--c $CONFIG_FILE \
---type xbox360 \
---device-by-id $DEVICE_ID \
---detach-kernel-driver
+# sudo xboxdrv --mimic-xpad --silent \
+# --quiet \
+# -c $CONFIG_FILE \
+# --type xbox360 \
+# --device-by-id $DEVICE_ID \
+# --detach-kernel-driver
+
+xboxdrv --mimic-xpad --silent -c $CONFIG_FILE --type xbox360 --device-by-id $DEVICE_ID --detach-kernel-driver
 
 # Example snippet from `man xboxdrv` to start a game.
 # Start xboxdrv and launch a game, when game is closed so do xboxdrv.
