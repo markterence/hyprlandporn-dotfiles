@@ -5,7 +5,7 @@
 # 2dc8:310a
 
 # Get event from `evtest` command and look for the event that has the name of the controller
-EVENT_ID=/dev/input/event25
+EVENT_ID=/dev/input/event19
 
 # Replace this with the path to where you have the config file
 # Prefer to use absolute path instead of relative path
@@ -19,7 +19,11 @@ DEVICE_ID="2dc8:310a"
 # I tried to get the device from --evdev, it works but will not respond after a while.
 # xboxdrv --mimic-xpad --silent --quiet --evdev $EVENT_ID -c $CONFIG_FILE
 
-# xboxdrv --mimic-xpad --silent --evdev $EVENT_ID -c $CONFIG_FILE --detach-kernel-driver --type xbox360
+function evdev {
+    event_id=$1
+    fmt_event_id=$(echo $event_id | sed 's/\/dev\/input\///')
+    xboxdrv --mimic-xpad --silent --evdev $event_id -c $CONFIG_FILE --detach-kernel-driver --type xbox360
+}
 
 # xinput? 
 # sudo xboxdrv --mimic-xpad --silent \
@@ -29,7 +33,21 @@ DEVICE_ID="2dc8:310a"
 # --device-by-id $DEVICE_ID \
 # --detach-kernel-driver
 
-xboxdrv --mimic-xpad --silent -c $CONFIG_FILE --type xbox360 --device-by-id $DEVICE_ID --detach-kernel-driver
+function main {
+    xboxdrv --mimic-xpad --silent -c $CONFIG_FILE --type xbox360 --device-by-id $DEVICE_ID --detach-kernel-driver
+}
+
+function test {
+    # Test
+    xboxdrv --mimic-xpad -c $CONFIG_FILE --type xbox360 --device-by-id $DEVICE_ID --detach-kernel-driver
+}
+
+if [ "$1" = "test" ]; then
+    test
+else
+    main
+fi
+
 
 # Example snippet from `man xboxdrv` to start a game.
 # Start xboxdrv and launch a game, when game is closed so do xboxdrv.
