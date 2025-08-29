@@ -1,0 +1,10 @@
+#!/bin/bash
+
+results=$(curl -sS https://am.i.mullvad.net/json)
+
+echo "$results" | jq -r '"IP: \(.ip) \nLocation: \(.city),\(.country) \nUsingExitIP: \(.mullvad_exit_ip) \nExitHostname: \(.mullvad_exit_ip_hostname) \nServerType: \(.mullvad_server_type) \nOrganization: \(.organization)"' | column -t -l 2
+
+
+#echo "$results" | jq -r '"IP: \(.ip) \nLocation: \(.city),\(.country) \nMullvadExitIP: \(.mullvad_exit_ip) \nMullvadExitHostname: \(.mullvad_exit_ip_hostname) \nMullvadServerType: \(.mullvad_server_type) \nOrganization: \(.organization)"' | column -t
+
+
