@@ -25,8 +25,8 @@ function _desktop_entry {
     content="[Desktop Entry]
 Encoding=UTF-8
 Name=Postman
-Exec=/usr/bin/postman --ozone-platform=wayland --enable-features=UseOzonePlatform,WaylandWindowDecorations,WaylandLinuxDrmSyncobj
-Icon=/opt/postman/icons/icon_128x128.png
+Exec=/usr/bin/postman --ozone-platform=x11 --enable-features=UseOzonePlatform,WaylandWindowDecorations,WaylandLinuxDrmSyncobj
+Icon=/opt/postman/app/icons/icon_128x128.png
 Terminal=false
 Type=Application
 Categories=Development;"
