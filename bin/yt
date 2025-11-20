@@ -2,17 +2,20 @@
 # https://github.com/yt-dlp/yt-dlp
 
 if [ -z "$1" ]; then
-    echo "Usage: yt <url>"
+    echo "Usage: yt <url> [yt-dlp options]"
     exit 1
 fi
 
 start_time=$(date +%s)
-
+URL="$1"
+shift
+## pass extra args 
 cd ~/Videos && yt-dlp \
     -f 'bestvideo[height<=?1080]+bestaudio/best' \
     --merge-output-format mkv \
     -S "ext" \
-    --downloader aria2c --downloader-args aria2c:'-c -j 8 -x 8 -s 8 -k 1M' "$1"
+    --downloader aria2c --downloader-args aria2c:'-c -j 8 -x 8 -s 8 -k 1M' \
+    "$@" "$URL"
 
 end_time=$(date +%s)
 elapsed_time=$((end_time - start_time))

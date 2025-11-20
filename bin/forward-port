@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+# Usage: forward-port "<local_port>:<remote_interface>:<remote_port>"
+
+# Perform local port forwarding (input is ""port:remote-interface:port"") do not run in background
+# parse input
+local_port=$1
+IFS=":" read -r remote_interface remote_port <<< "$2"
+shift 2 # Shift off the first two arguments
+# Pass other args to ssh command no need to validate since ssh will do it
+
+if [ -z "$local_port" ] || [ -z "$remote_interface" ] || [ -z "$remote_port" ]; then
+    echo "Usage: $0 <local_port> <remote_interface>:<remote_port>"
+    exit 1
+fi
+
+echo "Creating SSH tunnel from localhost:$local_port to $remote_port"
+
+ssh -N -L "127.0.0.1:$local_port:$remote_interface:$remote_port" -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" "$@"
