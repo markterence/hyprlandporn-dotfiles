@@ -1,4 +1,4 @@
-//* ---- 💫 https://github.com/JaKooLit 💫 ---- *//
+//* ---- 💫 https://github.com/LinuxBeginnings 💫 ---- *//
 /* Waybar Modules - Groups Modules */
 /* Basically created to reduce the lines in Waybar Modules bank */
 /* NOTE: This is only for Groups */
@@ -14,7 +14,7 @@
         },
 	"modules": [
 		"custom/menu",
-		"custom/light_dark",
+		//"custom/light_dark",
 		"custom/file_manager",
 		"custom/tty",
 		"custom/browser",
